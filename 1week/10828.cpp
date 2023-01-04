@@ -1,9 +1,13 @@
 #include <iostream>
 #include <string>
 using namespace std;
-#define MAX_STACK_SIZE	100
+#define MAX_STACK_SIZE	100 // 제 생각엔 여기에서 문제가 발생하는 거 같습니다.. 
 //시간복잡도 O(n)
 //공간복잡도 O(n) 
+/*어려웠던 점: push X라고 되어있어서 어떻게 받을지 생각하는 게 힘들었다 !! 
+또한 자료구조 시간에 배운 스택 클래스를 구현할 지 그냥 구현되어 있는 stack 을 쓸 지
+고민하다가 이왕 하는 김에 해보자 !! 했는데 좀 후회되기도 했다..*/ 
+ 
 class ArrayStack
 {
 	int		data[MAX_STACK_SIZE];	// 요소의 배열
