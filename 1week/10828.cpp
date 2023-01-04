@@ -1,0 +1,81 @@
+#include <iostream>
+#include <string>
+using namespace std;
+#define MAX_STACK_SIZE	100
+
+class ArrayStack
+{
+	int		data[MAX_STACK_SIZE];	// 요소의 배열
+	int		count;					// 요소의 개수
+
+public:
+	ArrayStack() { count = -1; }
+	~ArrayStack() {}
+	//정수 e 스택에 넣고 
+	void push(int e) {
+		data[++count] = e;
+	}
+	bool empty() { return count == -1; }
+	int pop() {
+		if (empty() == 1) {
+			return -1;
+		}
+		else
+			return data[count--];
+	}
+	
+	int top() {
+		if (empty() == 1) {
+			return -1;
+		}
+		else
+			return data[count];
+	}
+
+	int size() {
+		return count+1;
+	}
+	
+};
+
+int main() {
+	//클래스 초기화
+	ArrayStack stack;
+
+	// 주어지는 명령의 수 N
+	int N;
+	cin >> N;
+
+	for (int i = 0; i < N; i++) {
+		string cmd;//입력받을 명령어
+		cin >> cmd;
+
+		//push X: 정수 X를 스택에 넣는 연산.
+		if (cmd == "push") {
+			int num;
+			cin >> num;
+			stack.push(num);
+		}
+		//pop: 스택에서 가장 위에 있는 정수를 빼고, 그 수를 출력.
+		//만약 스택에 들어있는 정수가 없는 경우에는 -1을 출력.
+		else if (cmd == "pop") {
+			cout<<stack.pop()<<'\n';
+		}
+		//size: 스택에 들어있는 정수의 개수를 출력.
+		else if (cmd == "size") {
+			cout << stack.size() << '\n';
+		}
+		//empty: 스택이 비어있으면 1, 아니면 0을 출력.
+		else if (cmd == "empty") {
+			cout << stack.empty() << '\n';
+		}
+		//top: 스택의 가장 위에 있는 정수를 출력.
+		//만약 스택에 들어있는 정수가 없는 경우에는 -1을 출력.
+		else if (cmd == "top") {
+			cout << stack.top() << '\n';
+		}
+
+	}
+	//라고 했는데 런타임 오류가 납니다.. 왜그럴까요.. 실행을 잘되는데....
+	return 0;
+}
