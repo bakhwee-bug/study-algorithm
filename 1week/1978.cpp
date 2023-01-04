@@ -1,6 +1,7 @@
 #include<iostream>
 using namespace std;
-
+//시간복잡도 O(n)
+//공간복잡도 O(1)
 int main() {
 	
 	int N;
@@ -10,7 +11,7 @@ int main() {
 	//N개의 수가 주어지는데 수는 1, 000 이하의 자연수이다.
 	//소수는 1과 자기자신으로 나눌 때만 나누어 떨어짐
 	//입력 받을 수를 1부터 자기자신까지 나누었을때 카운트해서 나누어 떨어지는게
-	//2번이면 소수임 ( 1은 제외 )
+	//2번이면 소수임
 
 	for (int i = 0; i < N; i++) {
 		int num;
@@ -18,10 +19,7 @@ int main() {
 
 		int cnt = 0;
 
-		if (num == 1) {
-			cnt++;
-		}
-		//1이면 한 번 더 cnt++해서 아래 과정을 거쳤을 때 1도 cnt가 2가 돼서 count 됨
+		
 		for (int i = 1; i <= num; i++) {
 			if (num % i == 0) {
 				cnt++;
@@ -34,6 +32,5 @@ int main() {
 	}
 	cout << count;
 	
-	//이렇게 했는데 자꾸 실패라고 뜹니다.. 어디서 잘못된걸까요..실행은 잘되는데..
 	return 0;
 }
