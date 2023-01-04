@@ -1,7 +1,7 @@
 #include<iostream>
 using namespace std;
 //시간 복잡도 O(n)..? 
-//공간 복잡도 O(1) 
+//공간 복잡도 O(1)
 /*어려웠던 점: 저 5에 a를 곱해서 빼고 이런 과정을 생각해내는 것이 어려웠습니다*/ 
 int main() {
     int number; // 설탕무게

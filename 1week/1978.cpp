@@ -1,6 +1,6 @@
 #include<iostream>
 using namespace std;
-//시간복잡도 O(n)
+//시간복잡도 O(n^2)
 //공간복잡도 O(1)
 /*어려웠던 점: 1을 소수라고 착각해서 어려웠다..*/ 
 int main() {
