@@ -2,7 +2,8 @@
 #include <string>
 using namespace std;
 #define MAX_STACK_SIZE	100
-
+//시간복잡도 O(n)
+//공간복잡도 O(n) 
 class ArrayStack
 {
 	int		data[MAX_STACK_SIZE];	// 요소의 배열

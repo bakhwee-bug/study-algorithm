@@ -1,6 +1,7 @@
 #include<iostream>
 using namespace std;
-
+//시간 복잡도 O(n)..? 
+//공간 복잡도 O(1) 
 int main() {
     int number; // 설탕무게
     cin >> number; //설탕 무게를 입력받습니다
