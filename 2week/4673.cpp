@@ -10,33 +10,38 @@ using namespace std;
 배열 [2] [4] [8] [16] 에 +1을 하는 것....
 그럼 어디까지 for문을 돌려야하지?...
 **********************************/
+
+//배열 만들기
+int cnt[10000];
+
+//각 자리수 합 만드는 함수 만들기
+int solution(int n) {
+	int answer = 0;
+	while (n != 0)
+	{
+		answer = answer + n % 10;
+		n = n / 10;
+	}
+
+	return answer;
+}
+
+//함수 d(n)??을 만들어야 함. 재귀함수를 써야하나??
+int d(int a) {
+	if (a > 10000) {
+		//나온 숫자 10000넘으면 종료
+		return;
+	}
+	else {
+		int result = a + solution(a);
+		cnt[result]++;
+		return d(result);
+	}
+}
+
 int main() {
-	//배열 만들기
-	int count[10000];
 	
-	//각 자리수 합 만드는 함수 만들기
-	int solution(int n) {
-		int answer = 0; 
-		while (n != 0)
-		{
-			answer = answer + n % 10;
-			n = n / 10;
-		}
-
-		return answer;
-	}
-		
-	//함수 d(n)??을 만들어야 함. 재귀함수를 써야하나??
-
-	int d (int a){
-		if (a > 10000) {
-			//나온 숫자 10000넘으면 종료
-			return;
-		}
-		else {
-			return d(a + a);
-		}
-	}
+	
 		
 	return 0;
 }
