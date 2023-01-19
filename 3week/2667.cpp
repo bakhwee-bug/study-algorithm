@@ -4,54 +4,54 @@
 #include <algorithm>
 using namespace std;
 
-// ½Ã°£º¹Àâµµ
-// °ø°£º¹Àâµµ
-// ¾î·Á¿ü´ø Á¡: ³Êºñ ¿ì¼± Å½»ö
+// ì‹œê°„ë³µìž¡ë„
+// ê³µê°„ë³µìž¡ë„
+// ì–´ë ¤ì› ë˜ ì : ë„ˆë¹„ ìš°ì„  íƒìƒ‰
 /**********************************
-Áöµµ¸¦ ÀÔ·Â¹Þ°í ÀüÃ¼ Áöµµ ÈÈ´Â´Ù!!
-ÀÌ¶§ 1ÀÌ¸é¼­ ¹æ¹®ÇÏÁö ¾ÊÀº °÷À» Ã£°í
-Ã£À¸¸é ±× ÁýÀ» ½ÃÀÛÀ¸·Î ±× ÁýÀÌ ÀÖ´Â ´ÜÁöÀÇ ÁýÀÇ ¼ö¸¦ ±¸ÇÔ
-±×¸®°í ÀüÃ¼ Áöµµ µ¥ÀÌÅÍ Å½»ö ´Ù ³¡³ª¸é
-°¢°¢ÀÇ ´ÜÁö ³» ÁýÀÇ ¼ö¸¦ ¿À¸§Â÷¼øÀ¸·Î Á¤·Ä ÈÄ Ãâ·Â
+ì§€ë„ë¥¼ ìž…ë ¥ë°›ê³  ì „ì²´ ì§€ë„ í›‘ëŠ”ë‹¤!!
+ì´ë•Œ 1ì´ë©´ì„œ ë°©ë¬¸í•˜ì§€ ì•Šì€ ê³³ì„ ì°¾ê³ 
+ì°¾ìœ¼ë©´ ê·¸ ì§‘ì„ ì‹œìž‘ìœ¼ë¡œ ê·¸ ì§‘ì´ ìžˆëŠ” ë‹¨ì§€ì˜ ì§‘ì˜ ìˆ˜ë¥¼ êµ¬í•¨
+ê·¸ë¦¬ê³  ì „ì²´ ì§€ë„ ë°ì´í„° íƒìƒ‰ ë‹¤ ëë‚˜ë©´
+ê°ê°ì˜ ë‹¨ì§€ ë‚´ ì§‘ì˜ ìˆ˜ë¥¼ ì˜¤ë¦„ì°¨ìˆœìœ¼ë¡œ ì •ë ¬ í›„ ì¶œë ¥
 **********************************/
 
 int n;
-int map[26][26]; //ÀÔ·Â ¹ÞÀ» Áöµµ ¹è¿­
-vector<int> ans; //´ÜÁö Å©±â ÀÔ·ÂÇÒ º¤ÅÍ. ´ÜÁö°¡ ¸î °³ ³ª¿Ã Áö ¸ð¸£´Ï±î º¤ÅÍ·Î ÇÔ
-bool visited[26][26] = { false }; //¹æ¹® Ã¼Å© ¹è¿­ false·Î ÃÊ±âÈ­
+int map[26][26]; //ìž…ë ¥ ë°›ì„ ì§€ë„ ë°°ì—´
+vector<int> ans; //ë‹¨ì§€ í¬ê¸° ìž…ë ¥í•  ë²¡í„°. ë‹¨ì§€ê°€ ëª‡ ê°œ ë‚˜ì˜¬ ì§€ ëª¨ë¥´ë‹ˆê¹Œ ë²¡í„°ë¡œ í•¨
+bool visited[26][26] = { false }; //ë°©ë¬¸ ì²´í¬ ë°°ì—´ falseë¡œ ì´ˆê¸°í™”
 
 
-int dx[4] = { -1, 1, 0, 0 };// »ó, ÇÏ, ÁÂ, ¿ì·Î °¡±â À§ÇÑ ¹è¿­
-int dy[4] = { 0, 0, -1, 1 };// »ó, ÇÏ, ÁÂ, ¿ì·Î °¡±â À§ÇÑ ¹è¿­
+int dx[4] = { -1, 1, 0, 0 };// ìƒ, í•˜, ì¢Œ, ìš°ë¡œ ê°€ê¸° ìœ„í•œ ë°°ì—´
+int dy[4] = { 0, 0, -1, 1 };// ìƒ, í•˜, ì¢Œ, ìš°ë¡œ ê°€ê¸° ìœ„í•œ ë°°ì—´
 
-void bfs(int row, int col)//³Êºñ¿ì¼±Å½»ö....
+void bfs(int row, int col)//ë„ˆë¹„ìš°ì„ íƒìƒ‰....
 {
-    queue<pair<int, int>> q; //ÁöµµÀÇ Çà°ú ¿­ ³Ö¾îÁà¾ßÇÏ¹Ç·Î º¤ÅÍ¿¡ µÎ ½Ö ³Ö¾îÁÙ°ÅÀÓ
-    q.push(make_pair(row, col));//Å¥¿¡ ÇàÀÌ¶û ¿­ ½Ö Áö¾î¼­ push
-    visited[row][col] = true; // ±×¸®°í ¹æ¹® Ã¼Å© ¹è¿­¿¡ true·Î ¸¸µé¾îÁÜ
-    int cnt = 0; //´ÜÁö¼ö 
-    cnt++;//´ÜÁö¼ö plus
+    queue<pair<int, int>> q; //ì§€ë„ì˜ í–‰ê³¼ ì—´ ë„£ì–´ì¤˜ì•¼í•˜ë¯€ë¡œ ë²¡í„°ì— ë‘ ìŒ ë„£ì–´ì¤„ê±°ìž„
+    q.push(make_pair(row, col));//íì— í–‰ì´ëž‘ ì—´ ìŒ ì§€ì–´ì„œ push
+    visited[row][col] = true; // ê·¸ë¦¬ê³  ë°©ë¬¸ ì²´í¬ ë°°ì—´ì— trueë¡œ ë§Œë“¤ì–´ì¤Œ
+    int cnt = 0; //ë‹¨ì§€ìˆ˜ 
+    cnt++;//ë‹¨ì§€ìˆ˜ plus
     while (!q.empty())
     {
-        int front_x = q.front().first; //Å¥¿¡¼­ ¸Ç ¾Õ¿¡ ÀÖ´Â °Å xÁÂÇ¥
-        int front_y = q.front().second;//Å¥¿¡¼­ ¸Ç ¾Õ¿¡ ÀÖ´Â °Å yÁÂÇ¥
-        q.pop(); //»èÁ¦ ÇØÁÜ
+        int front_x = q.front().first; //íì—ì„œ ë§¨ ì•žì— ìžˆëŠ” ê±° xì¢Œí‘œ
+        int front_y = q.front().second;//íì—ì„œ ë§¨ ì•žì— ìžˆëŠ” ê±° yì¢Œí‘œ
+        q.pop(); //ì‚­ì œ í•´ì¤Œ
         for (int i = 0; i < 4; i++)
         {
-            // next_x, next_y´Â ´ÙÀ½À¸·Î pushÇÒ ÀÎµ¦½º ÈÄº¸
+            // next_x, next_yëŠ” ë‹¤ìŒìœ¼ë¡œ pushí•  ì¸ë±ìŠ¤ í›„ë³´
             int next_x = front_x + dx[i];
             int next_y = front_y + dy[i];
-            if (0 <= next_x && next_x < n && 0 <= next_y && next_y < n // ¹üÀ§´Â Áöµµ¸¦ ³Ñ¾î°¡¸é ¾ÈµÊ
-                && visited[next_x][next_y] == false && map[next_x][next_y] == 1) //next ÁÂÇ¥°¡ ¹æ¹®ÇÏÁö ¾ÊÀº °÷ÀÌ°í, ÁýÀÌ ÀÖ´Ù¸é
+            if (0 <= next_x && next_x < n && 0 <= next_y && next_y < n // ë²”ìœ„ëŠ” ì§€ë„ë¥¼ ë„˜ì–´ê°€ë©´ ì•ˆë¨
+                && visited[next_x][next_y] == false && map[next_x][next_y] == 1) //next ì¢Œí‘œê°€ ë°©ë¬¸í•˜ì§€ ì•Šì€ ê³³ì´ê³ , ì§‘ì´ ìžˆë‹¤ë©´
             {
-                q.push(make_pair(next_x, next_y));//pushÇØÁÜ
-                visited[next_x][next_y] = true;// ±×¸®°í ¹æ¹® Ã¼Å© ¹è¿­¿¡ true·Î ¸¸µé¾îÁÜ
+                q.push(make_pair(next_x, next_y));//pushí•´ì¤Œ
+                visited[next_x][next_y] = true;// ê·¸ë¦¬ê³  ë°©ë¬¸ ì²´í¬ ë°°ì—´ì— trueë¡œ ë§Œë“¤ì–´ì¤Œ
                 cnt++;
             }
         }
     }
-    //queue°¡ ºô ¶§±îÁö ¹Ýº¹
-    ans.push_back(cnt);//´ÜÁö ¼ö ans¿¡ ³Ö¾îÁÜ
+    //queueê°€ ë¹Œ ë•Œê¹Œì§€ ë°˜ë³µ
+    ans.push_back(cnt);//ë‹¨ì§€ ìˆ˜ ansì— ë„£ì–´ì¤Œ
 }
 
 
@@ -59,7 +59,7 @@ int main()
 {
    
     cin >> n;
-    // Áöµµ ÀÔ·Â¹Þ±â
+    // ì§€ë„ ìž…ë ¥ë°›ê¸°
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < n; j++)
@@ -68,19 +68,19 @@ int main()
         }
     }
 
-    // Áöµµ Å½»ö
+    // ì§€ë„ íƒìƒ‰
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < n; j++)
-        {//¹æ¹® ¾È Çß°í ÁýÀÌ ÀÖÀ¸¸é bfs ½ÃÀÛ
+        {//ë°©ë¬¸ ì•ˆ í–ˆê³  ì§‘ì´ ìžˆìœ¼ë©´ bfs ì‹œìž‘
             if (visited[i][j] == false && map[i][j] == 1)
             {
                 bfs(i, j);
             }
         }
     }
-    // °á°ú Ãâ·Â
-    sort(ans.begin(), ans.end());//´ÜÁö ¼ö Á¤·Ä
+    // ê²°ê³¼ ì¶œë ¥
+    sort(ans.begin(), ans.end());//ë‹¨ì§€ ìˆ˜ ì •ë ¬
     cout << ans.size() << '\n';
     for (int i = 0; i < ans.size(); i++)
         cout << ans[i] << '\n';
