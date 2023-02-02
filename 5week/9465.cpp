@@ -7,16 +7,12 @@
 **********************************/
 
 #include <iostream>
+#include <algorithm>
 #define MAX 100001
 using namespace std;
 
 int sticker[2][MAX], dp[2][MAX];//점수랑 누적 저장할 배열
 int T, n;
-
-int max(int a, int b) {//a, b 중 최댓값 구하는 함수
-    if (a > b) return a;
-    else return b;
-}
 
 void dynamic(int n) {
 
@@ -41,8 +37,6 @@ void dynamic(int n) {
 
 }
 
-
-
 void input() {
     cin >> T;
     for (int i = 0; i < T; i++) {
@@ -51,14 +45,7 @@ void input() {
     }
 }
 
-
-
-
 int main() {
-
     input();
-
-
-
     return 0;
 }

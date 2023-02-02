@@ -26,13 +26,8 @@ void input() {
 
 
 void dynamic() {
-	//1행에는 자기 자신 저장
-	dp[1][1] = RGB[1][1];
-	dp[1][2] = RGB[1][2];
-	dp[1][3] = RGB[1][3];
-
 	//2행부터는 자기 자신 위에꺼 말고 다른거 2개중에 작은거 저장
-	for (int i = 2; i <= N; i++) {
+	for (int i = 1; i <= N; i++) {
 		dp[i][1] = RGB[i][1] + min(dp[i - 1][2], dp[i - 1][3]);
 		dp[i][2] = RGB[i][2] + min(dp[i - 1][1], dp[i - 1][3]);
 		dp[i][3] = RGB[i][3] + min(dp[i - 1][1], dp[i - 1][2]);
