@@ -24,6 +24,7 @@ void find(int n) {
         arr[i][0] = 1; //첫째줄 1로 초기화 arr[1][0]~arr[n][0]
         for (int j = 1; j <= 9; j++) {
             arr[i][j] = arr[i][j - 1] + arr[i - 1][j]; //옆에꺼랑 위에꺼 더한걸로 넣기
+            arr[i][j] %= 10007;//이거 추가하니까 됨.. 왜지?
         }
     }
     long long cnt = 0;
