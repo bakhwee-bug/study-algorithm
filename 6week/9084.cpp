@@ -18,17 +18,17 @@ int main(){
         cin >> M;//주어진 N가지 동전으로 만들어야 할 금액 M(1 ≤ M ≤ 10000)
         
         for(int i=1;i<=N;i++){
-            arr[coin[i]][0]=1;
+            arr[i][0]=1;
             for(int j=1;j<=M;j++){
                 if(j<coin[i]){
-                    arr[coin[i]][j]=arr[coin[i-1]][j];
+                    arr[i][j]=arr[i-1][j];
                 }
                 else{
-                    arr[coin[i]][j] = arr[coin[i-1]][j] + arr[coin[i]][j-coin[i]];
+                    arr[i][j] = arr[i-1][j] + arr[i][j-coin[i]];
                 }
             }
         }
-        cout<<arr[coin[N]][M]<<"\n";
+        cout<<arr[N][M]<<"\n";
     }
     
     return 0;
