@@ -1,86 +1,80 @@
+//ì‹œê°„ë³µì¡ë„ O(N*M)
+
 #include <iostream>
-#include <vector>
 #include <queue>
-#include <algorithm>
+#define MAX 1001
 using namespace std;
-// ½Ã°£º¹Àâµµ
-// °ø°£º¹Àâµµ
-// ¾î·Á¿ü´ø Á¡: day¸¦ ¾ğÁ¦ Ä«¿îÆ® ÇÒ Áö Á¤ÇÏ´Â °Ô ¾î·Á¿ü½À´Ï´Ù. ±×¸®°í ¾ğÁ¦ ¸¶¹«¸® ÇÒ Áö ...
-/**********************************
-Åä¸¶Åä °¡·Î Ä­ ¼ö, ¼¼·Î Ä­ ¼ö ÀÔ·Â ¹Ş°í ±×°Í´ë·Î ¹è¿­À» ¸¸µì´Ï´Ù.
-±×¸®°í µÑÂ° ÁÙºÎÅÍ ÁÖ¾îÁö´Â Á¤º¸¸¦ ¹è¿­¿¡ ³Ö½À´Ï´Ù.
-±×¸®°í ÀÌÁ¦ ´Ù µ¹¸é¼­ 1ÀÌ ÀÖÀ¸¸é Å¥¿¡ ³Ö½À´Ï´Ù
-±×¸®°í Å¥¿¡ µé¾î¿Â ¼øÀ¸·Î BFS ¤¡¤¡ ÇØ¼­ ´ÙÀ½ Åä¸¶Åä°¡ 0ÀÌ°í ¹æ¹®À» ¾È ÇßÀ¸¸é Å¥¿¡ ³Ö½À´Ï´Ù.
-±×¸®°í Å¥°¡ ºô ¶§±îÁö BFS¸¦ µ¹¸³´Ï´Ù.
-**********************************/
-
-int n, m;
-int map[1000][1000]; //ÀÔ·Â ¹ŞÀ» Åä¸¶Åä ¹è¿­
-vector<int> ans; //Åä¸¶Åä ³¯Â¥ ÀÔ·ÂÇÒ º¤ÅÍ. 
-bool visited[1000][1000] = { false }; //¹æ¹® Ã¼Å© ¹è¿­ false·Î ÃÊ±âÈ­
 
 
-int dx[4] = { -1, 1, 0, 0 };// »ó, ÇÏ, ÁÂ, ¿ì·Î °¡±â À§ÇÑ ¹è¿­
-int dy[4] = { 0, 0, -1, 1 };// »ó, ÇÏ, ÁÂ, ¿ì·Î °¡±â À§ÇÑ ¹è¿­
+int M,N;
+int tomato[MAX][MAX];//í† ë§ˆí†  ì§€ë„
+int noripen, day;//ìµì§€ ì•Šì€ í† ë§ˆí†  ê°œìˆ˜, ë‚ ì§œ
+deque<pair<int,int>> q; //íƒìƒ‰í•  ë•Œ ì“¸ í.
 
-void bfs(int row, int col)//³Êºñ¿ì¼±Å½»ö....
-{
-    queue<pair<int, int>> q; //Åä¸¶ÅäÀÇ Çà°ú ¿­ ³Ö¾îÁà¾ßÇÏ¹Ç·Î º¤ÅÍ¿¡ µÎ ½Ö ³Ö¾îÁÙ°ÅÀÓ
-    q.push(make_pair(row, col));//Å¥¿¡ ÇàÀÌ¶û ¿­ ½Ö Áö¾î¼­ push
-    visited[row][col] = true; // ±×¸®°í ¹æ¹® Ã¼Å© ¹è¿­¿¡ true·Î ¸¸µé¾îÁÜ
-    int cnt = 0; //³¯Â¥¼ö 
-    cnt++;//³¯Â¥¼ö plus
-    while (!q.empty())
-    {
-        int front_x = q.front().first; //Å¥¿¡¼­ ¸Ç ¾Õ¿¡ ÀÖ´Â °Å xÁÂÇ¥
-        int front_y = q.front().second;//Å¥¿¡¼­ ¸Ç ¾Õ¿¡ ÀÖ´Â °Å yÁÂÇ¥
-        q.pop(); //»èÁ¦ ÇØÁÜ
-        for (int i = 0; i < 4; i++)
-        {
-            // next_x, next_y´Â ´ÙÀ½À¸·Î pushÇÒ ÀÎµ¦½º ÈÄº¸
-            int next_x = front_x + dx[i];
-            int next_y = front_y + dy[i];
-            if (0 <= next_x && next_x < n && 0 <= next_y && next_y < n // ¹üÀ§´Â Áöµµ¸¦ ³Ñ¾î°¡¸é ¾ÈµÊ
-                && visited[next_x][next_y] == false && map[next_x][next_y] == 0) //next ÁÂÇ¥°¡ ¹æ¹®ÇÏÁö ¾ÊÀº °÷ÀÌ°í, Åä¸¶Åä°¡ 0»óÅÂ¶ó¸é
-            {
-                q.push(make_pair(next_x, next_y));//pushÇØÁÜ
-                visited[next_x][next_y] = true;// ±×¸®°í ¹æ¹® Ã¼Å© ¹è¿­¿¡ true·Î ¸¸µé¾îÁÜ
-                cnt++;
+int dx[4] = { -1, 1, 0, 0 };// ìƒ, í•˜, ì¢Œ, ìš°ë¡œ ê°€ê¸° ìœ„í•œ ë°°ì—´
+int dy[4] = { 0, 0, -1, 1 };// ìƒ, í•˜, ì¢Œ, ìš°ë¡œ ê°€ê¸° ìœ„í•œ ë°°ì—´
+
+
+//M,N ì…ë ¥ë°›ê³  í† ë§ˆí†  ë°°ì—´ ì…ë ¥ë°›ëŠ” í•¨ìˆ˜
+void input(){
+    cin >>M>>N;
+    noripen = 0;//ìµì§€ ì•Šì€ í† ë§ˆí†  ê°œìˆ˜
+    for(int i=1;i<=N;i++){
+        for(int j=1;j<=M;j++){
+            cin >> tomato[i][j];
+            //0ì´ë©´ ìµì§€ ì•Šì€ í† ë§ˆí† ë¡œ count
+            if(tomato[i][j] == 0){
+                noripen++;
+            }
+            //1ì´ë©´ íì— ì§‘ì–´ë„£ê³  ë°©ë¬¸ì²´í¬ í•´ì£¼ê¸°
+            if(tomato[i][j] == 1){
+                q.push_back({i,j});
             }
         }
     }
-    //queue°¡ ºô ¶§±îÁö ¹İº¹
-    ans.push_back(cnt);//³¯Â¥ ¼ö ans¿¡ ³Ö¾îÁÜ
+}
+
+void graph(){
+
+    while(!q.empty()){
+        deque<pair<int,int>> q2; //ë‚ ì§œ ì„¸ê¸° ìœ„í•œ í
+        while (!q.empty()){
+            int front_x = q.front().first; //íì—ì„œ ë§¨ ì•ì— ìˆëŠ” ê±° xì¢Œí‘œ
+            int front_y = q.front().second;//íì—ì„œ ë§¨ ì•ì— ìˆëŠ” ê±° yì¢Œí‘œ
+            q.pop_front(); //ì‚­ì œ í•´ì¤Œ
+            for (int i = 0; i < 4; i++)
+            {
+                // next_x, next_yëŠ” ë‹¤ìŒìœ¼ë¡œ pushí•  ì¸ë±ìŠ¤ í›„ë³´
+                int next_x = front_x + dx[i];
+                int next_y = front_y + dy[i];
+                if (0 < next_x && next_x <=N && 0 < next_y && next_y <= M // ë²”ìœ„ëŠ” ì§€ë„ë¥¼ ë„˜ì–´ê°€ë©´ ì•ˆë¨
+                     && tomato[next_x][next_y] == 0) //next ì¢Œí‘œê°€ í† ë§ˆí† ê°€ 0ìƒíƒœë¼ë©´
+                {
+                    noripen--;
+                    q2.push_back(make_pair(next_x, next_y));//pushí•´ì¤Œ
+                    tomato[next_x][next_y] = 1;// ì´ì œ ìµì€ í† ë§ˆí† ê°€ ë  ê±°ë‹ˆê¹Œ 1ë¡œ ë°”ê¿”ì¤Œ.
+                }
+            }
+        }
+        day++;
+        q=q2;
+    }
+    
+    day--;
+    
+    
+    
+    if(noripen > 0){ //ìµì§€ ì•Šì€ í† ë§ˆí† ê°€ ìˆë‹¤ë©´
+        cout << "-1\n";
+    }
+    else{
+        cout << day << "\n";
+    }
 }
 
 
-int main()
-{
-
-    cin >> n >> m;
-    // Åä¸¶Åä ÀÔ·Â¹Ş±â
-    for (int i = 0; i < m; i++)
-    {
-        for (int j = 0; j < n; j++)
-        {
-            cin >> map[i][j];
-        }
-    }
-
-    // Áöµµ Å½»ö
-    for (int i = 0; i < m; i++)
-    {
-        for (int j = 0; j < n; j++)
-        {//¹æ¹® ¾È Çß°í ÁıÀÌ ÀÖÀ¸¸é bfs ½ÃÀÛ
-            if (visited[i][j] == false && map[i][j] == 1)
-            {
-                bfs(i, j);
-            }
-        }
-    }
-    // °á°ú Ãâ·Â
-    sort(ans.begin(), ans.end());//´ÜÁö ¼ö Á¤·Ä
-    cout << ans[0] << '\n';
-
+int main(){
+    input();
+    graph();
     return 0;
 }
