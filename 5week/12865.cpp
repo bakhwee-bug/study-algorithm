@@ -22,4 +22,8 @@ void input() {
 int main() {
 	input();
 	return 0;
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes
