@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 using namespace std;
-#define MAX_STACK_SIZE	100 // 제 생각엔 여기에서 문제가 발생하는 거 같습니다.. 
+#define MAX_STACK_SIZE	10001
 //시간복잡도 O(n)
 //공간복잡도 O(n) 
 /*어려웠던 점: push X라고 되어있어서 어떻게 받을지 생각하는 게 힘들었다 !! 
@@ -81,6 +81,5 @@ int main() {
 		}
 
 	}
-	//라고 했는데 런타임 오류가 납니다.. 왜그럴까요.. 실행을 잘되는데....
 	return 0;
 }
